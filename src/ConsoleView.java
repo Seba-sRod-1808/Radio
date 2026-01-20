@@ -12,11 +12,14 @@ public class ConsoleView {
     }
 
     public void controller() {
-        boolean exit = false;
+    boolean exit = false;
 
-        while (exit == false) {
-            displayMenu();
+    while (!exit) {
 
+        showRadioStatus();
+
+        if (!radio.isOn()) {
+            displayOffMenu();
             int option = getOption();
 
             switch (option) {
@@ -24,57 +27,74 @@ public class ConsoleView {
                     radio.turnOn();
                     showMessage("Radio Encendida");
                     break;
-            
                 case 2:
-                    if (radio.isOn()) {
-                        if (radio.getBand() == "AM") {
-                            radio.switchBand("FM");
-                            showMessage("Cambiado a FM");
-                        } else {
-                            radio.switchBand("AM");
-                            showMessage("Cambiado a AM");
-                        }
-                    } else {
-                        showMessage("La radio está apagada.");
-                    }
-                    break;
-                case 3:
-                    if (radio.isOn()) {
-                        radio.nextStation();
-                        showMessage("Frecuencia cambiada a " + radio.getCurrentStation());
-                    } else {
-                        showMessage("La radio está apagada.");
-                    }
-                    break;
-                case 4:
-                    if (radio.isOn()) {
-                        int buttonSaved = getButtonNumber();
-                        radio.saveStation(String.valueOf(buttonSaved + 1));
-                        showMessage("Estación guardada en el botón " + (buttonSaved + 1));
-                    } else {
-                        showMessage("La radio esta apagada");
-                    }
-                    break;
-                case 5:
-                    int buttonSelected = getButtonNumber();
-                    if (radio.isOn()) {
-                        radio.selectStation(String.valueOf(buttonSelected));
-                        showMessage("Estación seleccionada: " + radio.getCurrentStation());
-
-                    } else {
-                        showMessage("La radio está apagada.");
-                    }
-                    break;
-                case 6:
-                    radio.turnOff();
-                    showMessage("Radio Apagada");
                     exit = true;
                     break;
                 default:
-                    showMessage("Opcion invalida");
+                    showMessage("Opción inválida");
+            }
+
+        } else {
+            displayOnMenu();
+            int option = getOption();
+
+            switch (option) {
+                case 1:
+                    radio.turnOff();
+                    showMessage("Radio Apagada");
                     break;
+
+                case 2:
+                    if (radio.getBand().equals("AM")) {
+                        radio.switchBand("FM");
+                    } else {
+                        radio.switchBand("AM");
+                    }
+                    showMessage("Banda actual: " + radio.getBand());
+                    break;
+
+                case 3:
+                    radio.nextStation();
+                    showMessage("Frecuencia actual: " + radio.getCurrentStation());
+                    break;
+
+                case 4:
+                    int saveBtn = getButtonNumber();
+                    radio.saveStation(String.valueOf(saveBtn + 1));
+                    showMessage("Estación guardada en botón " + (saveBtn + 1));
+                    break;
+
+                case 5:
+                    int selectBtn = getButtonNumber();
+                    radio.selectStation(String.valueOf(selectBtn + 1));
+                    showMessage("Estación seleccionada: " + radio.getCurrentStation());
+                    break;
+
+                case 6:
+                    exit = true;
+                    break;
+
+                default:
+                    showMessage("Opción inválida");
             }
         }
+    }
+
+    System.out.println("Programa finalizado.");
+}
+
+    private void displayOffMenu() {
+        System.out.println("\n1. Prender Radio");
+        System.out.println("2. Salir");
+    }
+
+    private void displayOnMenu() {
+        System.out.println("\n1. Apagar Radio");
+        System.out.println("2. Cambiar AM / FM");
+        System.out.println("3. Cambiar Frecuencia");
+        System.out.println("4. Guardar Estación");
+        System.out.println("5. Seleccionar Estación");
+        System.out.println("6. Salir");
     }
 
     public void displayMenu() {
@@ -92,19 +112,18 @@ public class ConsoleView {
         return scanner.nextInt();
     }
 
-    public void showStatus(boolean isOn, String band, double getCurrentStation) {
-        if (isOn == true) {
-            System.out.printf("Radio Encendida");
+    private void showRadioStatus() {
+        if (!radio.isOn()) {
+            System.out.println("\n[Radio APAGADA]");
         } else {
-            System.out.println("Radio Apagada");
+            System.out.println(
+                "\n[Radio ENCENDIDA | Banda: " 
+                + radio.getBand() 
+                + " | Frecuencia: " 
+                + radio.getCurrentStation() 
+                + "]"
+            );
         }
-
-        if (band == "FM") {
-            System.out.printf(" | Banda: FM | Estación Actual: ", getCurrentStation);
-        } else {
-            System.out.printf(" | Banda: AM | Estación Actual: ", getCurrentStation);
-        }
-        
     }
 
     public int getButtonNumber() {

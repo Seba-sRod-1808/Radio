@@ -66,6 +66,8 @@ public class CarRadio implements RadioInterface {
                 currentStation = 530;
             }
         }
+        
+        currentStation = round(currentStation);
     }
 
     @Override
@@ -100,4 +102,9 @@ public class CarRadio implements RadioInterface {
     public double getCurrentStation() {
         return currentStation;
     }
+
+    private double round(double value) {
+    return Math.round(value * 100.0) / 100.0;
+}
+
 }

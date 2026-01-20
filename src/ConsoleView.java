@@ -49,7 +49,7 @@ public class ConsoleView {
                 case 4:
                     if (radio.isOn()) {
                         int buttonSaved = getButtonNumber();
-                        radio.saveStation(radio.getCurrentStation() + "");
+                        radio.saveStation(String.valueOf(buttonSaved + 1));
                         showMessage("Estación guardada en el botón " + (buttonSaved + 1));
                     } else {
                         showMessage("La radio esta apagada");
@@ -58,7 +58,7 @@ public class ConsoleView {
                 case 5:
                     int buttonSelected = getButtonNumber();
                     if (radio.isOn()) {
-                        radio.selectStation(radio.getCurrentStation() + "");
+                        radio.selectStation(String.valueOf(buttonSelected));
                         showMessage("Estación seleccionada: " + radio.getCurrentStation());
 
                     } else {

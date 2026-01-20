@@ -13,63 +13,67 @@ public class ConsoleView {
 
     public void controller() {
         boolean exit = false;
-        displayMenu();
 
-        int option = getOption();
+        while (exit == false) {
+            displayMenu();
 
-        switch (option) {
-            case 1:
-                radio.turnOn();
-                showMessage("Radio Encendida");
-                break;
-        
-            case 2:
-                if (radio.isOn()) {
-                    if (radio.getBand() == "AM") {
-                        radio.switchBand("FM");
-                        showMessage("Cambiado a FM");
+            int option = getOption();
+
+            switch (option) {
+                case 1:
+                    radio.turnOn();
+                    showMessage("Radio Encendida");
+                    break;
+            
+                case 2:
+                    if (radio.isOn()) {
+                        if (radio.getBand() == "AM") {
+                            radio.switchBand("FM");
+                            showMessage("Cambiado a FM");
+                        } else {
+                            radio.switchBand("AM");
+                            showMessage("Cambiado a AM");
+                        }
                     } else {
-                        radio.switchBand("AM");
-                        showMessage("Cambiado a AM");
+                        showMessage("La radio está apagada.");
                     }
-                } else {
-                    showMessage("La radio está apagada.");
-                }
-                break;
-            case 3:
-                if (radio.isOn()) {
-                    radio.nextStation();
-                    showMessage("Frecuencia cambiada a " + radio.getCurrentStation());
-                } else {
-                    showMessage("La radio está apagada.");
-                }
-                break;
-            case 4:
-                if (radio.isOn()) {
-                    int buttonSaved = getButtonNumber();
-                    radio.saveStation(radio.getCurrentStation() + "");
-                    showMessage("Estación guardada en el botón " + (buttonSaved + 1));
-                } else {
-                    showMessage("La radio esta apagada");
-                }
-                break;
-            case 5:
-                int buttonSelected = getButtonNumber();
-                if (radio.isOn()) {
-                    radio.selectStation(radio.getCurrentStation() + "");
-                    showMessage("Estación seleccionada: " + radio.getCurrentStation());
-                    
-                } else {
-                    showMessage("La radio está apagada.");
-                }
-                break;
-            case 6:
-                radio.turnOff();
-                showMessage("Radio Apagada");
-                break;
-            default:
-                showMessage("Opcion invalida");
-                break;
+                    break;
+                case 3:
+                    if (radio.isOn()) {
+                        radio.nextStation();
+                        showMessage("Frecuencia cambiada a " + radio.getCurrentStation());
+                    } else {
+                        showMessage("La radio está apagada.");
+                    }
+                    break;
+                case 4:
+                    if (radio.isOn()) {
+                        int buttonSaved = getButtonNumber();
+                        radio.saveStation(radio.getCurrentStation() + "");
+                        showMessage("Estación guardada en el botón " + (buttonSaved + 1));
+                    } else {
+                        showMessage("La radio esta apagada");
+                    }
+                    break;
+                case 5:
+                    int buttonSelected = getButtonNumber();
+                    if (radio.isOn()) {
+                        radio.selectStation(radio.getCurrentStation() + "");
+                        showMessage("Estación seleccionada: " + radio.getCurrentStation());
+
+                    } else {
+                        showMessage("La radio está apagada.");
+                    }
+                    break;
+                case 6:
+                    radio.turnOff();
+                    showMessage("Radio Apagada");
+                    exit = true;
+                    break;
+                default:
+                    showMessage("Opcion invalida");
+                    break;
+            }
         }
     }
 

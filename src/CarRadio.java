@@ -38,11 +38,11 @@ public class CarRadio implements RadioInterface {
         if (!isOn) return;
 
         if (band.equals("AM")) {
-            this.band = "AM";
-            currentStation = 530;
-        } else if (band.equals("FM")) {
             this.band = "FM";
             currentStation = 87.9;
+        } else if (band.equals("FM")) {
+            this.band = "AM";
+            currentStation = 530;
         }
     }
 

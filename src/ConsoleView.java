@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class ConsoleView {
     private Scanner scanner;
-    private CarRadio radio;
+    private Radio radio;
 
-    public ConsoleView(CarRadio radio) {
+    public ConsoleView(Radio radio) {
         this.scanner = new Scanner(System.in);
         this.radio = radio;
     }

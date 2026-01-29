@@ -1,3 +1,6 @@
+CRISTOPHER CHAVEZ 25199 
+SEBASTIAN RODAS 25038
+
 IMPORTANTE. 
 Este programa compila con el paquete de JUNIT instalado debido a la diferencia de IDES
 Utilizados por nosotros dos. 
